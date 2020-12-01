@@ -55,4 +55,8 @@ resource "aws_eks_fargate_profile" "default" {
     namespace = var.kubernetes_namespace
     labels    = var.kubernetes_labels
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
