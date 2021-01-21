@@ -51,8 +51,11 @@ resource "aws_eks_fargate_profile" "default" {
   subnet_ids             = var.subnet_ids
   tags                   = module.label.tags
 
-  selector {
-    namespace = var.kubernetes_namespace
-    labels    = var.kubernetes_labels
+  dynamic "selector" {
+    for_each = var.selectors
+    content {
+      namespace = selector.value["namespace"]
+      labels    = selector.value["labels"]
+    }
   }
 }

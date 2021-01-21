@@ -8,15 +8,17 @@ variable "subnet_ids" {
   type        = list(string)
 }
 
-variable "kubernetes_namespace" {
-  type        = string
-  description = "Kubernetes namespace for selection"
+variable "selectors" {
+  type = list(object({
+    namespace = string
+    labels    = map(string)
+  }))
+  description = "A list of selection objects that consist of a namespace and a map of labels."
 }
 
-variable "kubernetes_labels" {
-  type        = map(string)
-  description = "Key-value mapping of Kubernetes labels for selection"
-  default     = {}
+variable "kubernetes_namespace" {
+  type        = string
+  description = "Kubernetes namespace for creation of the execution role"
 }
 
 variable "iam_role_kubernetes_namespace_delimiter" {
